@@ -1,0 +1,38 @@
+[
+  {
+    "title": "Free Checkup",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat Convallis felis vitae tortor augue. Velit nascetur massa in.",
+    "image": "/images/home/news_01.png",
+    "icon": "FiActivity"
+  },
+  {
+    "title": "Cardiology",
+    "description": "Expert heart care and advanced cardiology services for all ages.",
+    "image": "/images/home/news_03.png",
+    "icon": "FiActivity"
+  },
+  {
+    "title": "Blood Bank",
+    "description": "Safe and reliable blood bank services available 24/7.",
+    "image": "/images/home/services_01.png",
+    "icon": "FiActivity"
+  },
+  {
+    "title": "Dna Testing",
+    "description": "Accurate DNA testing and genetic counseling for families.",
+    "image": "/images/home/services_02.png",
+    "icon": "FiActivity"
+  },
+  {
+    "title": "Neurology",
+    "description": "Comprehensive neurological care and treatment for all conditions.",
+    "image": "/images/home/doctor_01.png",
+    "icon": "FiActivity"
+  },
+  {
+    "title": "Emergency Care",
+    "description": "24/7 emergency care with expert doctors and modern facilities.",
+    "image": "/images/home/doctor_02.png",
+    "icon": "FiActivity"
+  }
+] 

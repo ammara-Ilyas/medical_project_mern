@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Dr. John Smith",
+    "specialty": "Neurology",
+    "image": "/images/home/doctor_01.png",
+    "linkedin": "#",
+    "facebook": "#",
+    "twitter": "#"
+  },
+  {
+    "name": "Dr. Jane Doe",
+    "specialty": "Cardiology",
+    "image": "/images/home/doctor_02.png",
+    "linkedin": "#",
+    "facebook": "#",
+    "twitter": "#"
+  },
+  {
+    "name": "Dr. Alex Brown",
+    "specialty": "Emergency Care",
+    "image": "/images/home/doctor_03.png",
+    "linkedin": "#",
+    "facebook": "#",
+    "twitter": "#"
+  },
+  {
+    "name": "Dr. Sarah Lee",
+    "specialty": "Pediatrics",
+    "image": "/images/home/doctor_01.png",
+    "linkedin": "#",
+    "facebook": "#",
+    "twitter": "#"
+  },
+  {
+    "name": "Dr. Michael Green",
+    "specialty": "Orthopedics",
+    "image": "/images/home/doctor_02.png",
+    "linkedin": "#",
+    "facebook": "#",
+    "twitter": "#"
+  },
+  {
+    "name": "Dr. Emily White",
+    "specialty": "Dermatology",
+    "image": "/images/home/doctor_03.png",
+    "linkedin": "#",
+    "facebook": "#",
+    "twitter": "#"
+  }
+] 
