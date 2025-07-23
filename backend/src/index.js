@@ -14,6 +14,10 @@ import appointmentRoutes from "./routes/appointment.routes.js";
 import serviceRoutes from "./routes/service.routes.js";
 import newsRoutes from "./routes/news.routes.js";
 import categoryRoutes from "./routes/category.routes.js";
+import paymentRoutes from "./routes/payment.routes.js";
+
+// Import middleware
+import { errorHandler } from "./middleware/error.js";
 
 dotenv.config();
 
@@ -90,6 +94,7 @@ app.use("/api/appointments", appointmentRoutes);
 app.use("/api/services", serviceRoutes);
 app.use("/api/news", newsRoutes);
 app.use("/api/categories", categoryRoutes);
+app.use("/api/payments", paymentRoutes);
 
 // Root endpoint
 app.get("/", (req, res) => {
@@ -113,13 +118,7 @@ app.use("*", (req, res) => {
 });
 
 // Error handling middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ 
-    message: "Something went wrong!", 
-    error: process.env.NODE_ENV === "development" ? err.message : "Internal server error"
-  });
-});
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log("🚀 Server is running on port", PORT);

@@ -26,8 +26,8 @@ const newsSchema = new mongoose.Schema({
     trim: true
   }],
   image: {
-    type: String,
-    default: "https://res.cloudinary.com/demo/image/upload/v1312461204/sample.jpg"
+      type: String,
+      default: "https://res.cloudinary.com/demo/image/upload/v1312461204/sample.jpg"
   },
   imagePublicId: {
     type: String

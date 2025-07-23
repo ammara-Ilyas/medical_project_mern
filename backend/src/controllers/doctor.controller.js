@@ -1,8 +1,7 @@
 import Doctor from "../models/Doctor.js";
 import User from "../models/User.js";
 import { successResponse, errorResponse, paginateResponse } from "../utils/response.js";
-import { uploadToCloudinary, deleteFromCloudinary } from "../middleware/multer.middleware.js";
-
+import { uploadToCloudinary, deleteCloudinaryImage } from "../lib/cloudinary.js";
 // @desc    Get all doctors
 // @route   GET /api/doctors
 // @access  Public
@@ -75,9 +74,6 @@ export const getDoctorById = async (req, res) => {
 // @access  Private
 export const createDoctor = async (req, res) => {
   try {
-    console.log('Create doctor request body:', req.body);
-    console.log('Create doctor file:', req.file);
-
     const {
       name,
       email,
@@ -95,44 +91,31 @@ export const createDoctor = async (req, res) => {
       services
     } = req.body;
 
-    // Validate required fields
     if (!name || !email || !phone || !password) {
       return errorResponse(res, "Name, email, phone, and password are required", 400);
     }
-
     if (!specialization || !licenseNumber || experience === undefined || consultationFee === undefined) {
       return errorResponse(res, "Specialization, license number, experience, and consultation fee are required", 400);
     }
-
-    // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return errorResponse(res, "User with this email already exists", 400);
     }
-
-    // Check if license number is unique
     const existingLicense = await Doctor.findOne({ licenseNumber });
     if (existingLicense) {
       return errorResponse(res, "License number already exists", 400);
     }
-
     let avatarUrl = '';
     let avatarPublicId = '';
-
-    // Handle avatar upload if file is present
     if (req.file) {
       try {
-        console.log('Uploading avatar to Cloudinary...');
-        const uploadResult = await uploadToCloudinary(req.file, 'avatars');
-        avatarUrl = uploadResult.url;
-        avatarPublicId = uploadResult.public_id;
-        console.log('Avatar uploaded successfully:', avatarUrl);
+        const uploadResult = await uploadToCloudinary(req.file.path, 'avatars');
+        avatarUrl = uploadResult.url || uploadResult.secure_url || uploadResult;
+        avatarPublicId = uploadResult.public_id || req.file.filename;
       } catch (uploadError) {
-        console.error('Avatar upload error:', uploadError);
         return errorResponse(res, "Failed to upload avatar: " + uploadError.message, 500);
       }
     }
-
     // Parse arrays from FormData
     let parsedLanguages = [];
     let parsedEducation = [];
@@ -229,6 +212,29 @@ export const createDoctor = async (req, res) => {
 // @access  Private
 export const updateDoctor = async (req, res) => {
   try {
+    let doctor = await Doctor.findById(req.params.id);
+    if (!doctor) {
+      return errorResponse(res, "Doctor not found", 404);
+    }
+    // Check if user can update this doctor profile
+    if (req.user.role !== 'admin' && doctor.user.toString() !== req.user.id) {
+      return errorResponse(res, "Not authorized to update this doctor profile", 403);
+    }
+    // Handle avatar upload if new file is present
+    if (req.file) {
+      try {
+        // Delete old avatar from Cloudinary if it exists
+        if (doctor.avatarPublicId) {
+          await deleteCloudinaryImage(doctor.avatarPublicId);
+        }
+        const uploadResult = await uploadToCloudinary(req.file.path, 'avatars');
+        doctor.avatar = uploadResult.url || uploadResult.secure_url || uploadResult;
+        doctor.avatarPublicId = uploadResult.public_id || req.file.filename;
+      } catch (uploadError) {
+        return errorResponse(res, "Failed to upload avatar: " + uploadError.message, 500);
+      }
+    }
+    // Update fields
     const {
       specialization,
       experience,
@@ -241,37 +247,17 @@ export const updateDoctor = async (req, res) => {
       services,
       isActive
     } = req.body;
-
-    let doctor = await Doctor.findById(req.params.id);
-
-    if (!doctor) {
-      return errorResponse(res, "Doctor not found", 404);
-    }
-
-    // Check if user can update this doctor profile
-    if (req.user.role !== 'admin' && doctor.user.toString() !== req.user.id) {
-      return errorResponse(res, "Not authorized to update this doctor profile", 403);
-    }
-
-    // Update fields
-    const updateFields = {};
-    if (specialization) updateFields.specialization = specialization;
-    if (experience !== undefined) updateFields.experience = experience;
-    if (education) updateFields.education = education;
-    if (certifications) updateFields.certifications = certifications;
-    if (bio) updateFields.bio = bio;
-    if (languages) updateFields.languages = languages;
-    if (consultationFee !== undefined) updateFields.consultationFee = consultationFee;
-    if (availability) updateFields.availability = availability;
-    if (services) updateFields.services = services;
-    if (isActive !== undefined) updateFields.isActive = isActive;
-
-    doctor = await Doctor.findByIdAndUpdate(
-      req.params.id,
-      updateFields,
-      { new: true, runValidators: true }
-    ).populate('user', 'name email phone avatar');
-
+    if (specialization) doctor.specialization = specialization;
+    if (experience !== undefined) doctor.experience = experience;
+    if (education) doctor.education = education;
+    if (certifications) doctor.certifications = certifications;
+    if (bio) doctor.bio = bio;
+    if (languages) doctor.languages = languages;
+    if (consultationFee !== undefined) doctor.consultationFee = consultationFee;
+    if (availability) doctor.availability = availability;
+    if (services) doctor.services = services;
+    if (isActive !== undefined) doctor.isActive = isActive;
+    await doctor.save();
     successResponse(res, doctor, "Doctor profile updated successfully");
   } catch (error) {
     console.error("Update doctor error:", error);

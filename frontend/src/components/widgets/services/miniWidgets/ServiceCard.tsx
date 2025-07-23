@@ -1,3 +1,4 @@
+'use client';
 import { FiActivity, FiBriefcase } from "react-icons/fi";
 import Image from "next/image";
 import { ReactNode } from "react";
@@ -26,6 +27,8 @@ export default function ServiceCard({
 }: ServiceCardProps) {
   return (
     <div
+      data-aos="zoom-in"
+      data-aos-delay="300"
       className="rounded-lg shadow bg-white overflow-hidden transition-all duration-200 border relative group cursor-pointer"
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}

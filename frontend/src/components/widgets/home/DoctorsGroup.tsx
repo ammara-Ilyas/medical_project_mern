@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function DoctorsGroup() {
   return (
-    <section className="w-full py-8 bg-white dark:bg-gray-900 border-2 border-red-500">
+    <section className="w-full py-8 bg-white dark:bg-gray-900 ">
       <div className="w-[90%] mx-auto px-4 flex flex-col items-center">
         <Image
           src="/images/home/doctor-group.png"

@@ -1,7 +1,6 @@
 import News from "../models/News.js";
 import { successResponse, errorResponse, paginateResponse } from "../utils/response.js";
-import { uploadToCloudinary, deleteFromCloudinary } from "../middleware/multer.middleware.js";
-
+import { uploadToCloudinary, deleteCloudinaryImage } from "../lib/cloudinary.js";
 // @desc    Get all news
 // @route   GET /api/news
 // @access  Public
@@ -97,28 +96,21 @@ export const createNews = async (req, res) => {
       isFeatured
     } = req.body;
 
-    // Validate required fields
     if (!title || !content) {
       return errorResponse(res, "Title and content are required", 400);
     }
-
     if (!category) {
       return errorResponse(res, "Category is required", 400);
     }
 
     let imageUrl = '';
     let imagePublicId = '';
-
-    // Handle image upload if file is present
     if (req.file) {
       try {
-        console.log('Uploading image to Cloudinary...');
-        const uploadResult = await uploadToCloudinary(req.file, 'news');
-        imageUrl = uploadResult.url;
-        imagePublicId = uploadResult.public_id;
-        console.log('Image uploaded successfully:', imageUrl);
+        const uploadResult = await uploadToCloudinary(req.file.path, 'news');
+        imageUrl = uploadResult.url || uploadResult.secure_url || uploadResult;
+        imagePublicId = uploadResult.public_id || req.file.filename;
       } catch (uploadError) {
-        console.error('Image upload error:', uploadError);
         return errorResponse(res, "Failed to upload image: " + uploadError.message, 500);
       }
     }
@@ -204,9 +196,6 @@ export const createNews = async (req, res) => {
 // @access  Private/Admin
 export const updateNews = async (req, res) => {
   try {
-    console.log('Update news request body:', req.body);
-    console.log('Update news file:', req.file);
-
     const {
       title,
       content,
@@ -222,29 +211,18 @@ export const updateNews = async (req, res) => {
     } = req.body;
 
     let news = await News.findById(req.params.id);
-
     if (!news) {
       return errorResponse(res, "News article not found", 404);
     }
-
-    // Handle image upload if new file is present
     if (req.file) {
       try {
-        console.log('Uploading new image to Cloudinary...');
-        
-        // Delete old image from Cloudinary if it exists
         if (news.imagePublicId) {
-          console.log('Deleting old image:', news.imagePublicId);
-          await deleteFromCloudinary(news.imagePublicId);
+          await deleteCloudinaryImage(news.imagePublicId);
         }
-
-        // Upload new image
-        const uploadResult = await uploadToCloudinary(req.file, 'news');
-        news.image = uploadResult.url;
-        news.imagePublicId = uploadResult.public_id;
-        console.log('New image uploaded successfully:', uploadResult.url);
+        const uploadResult = await uploadToCloudinary(req.file.path, 'news');
+        news.image = uploadResult.url || uploadResult.secure_url || uploadResult;
+        news.imagePublicId = uploadResult.public_id || req.file.filename;
       } catch (uploadError) {
-        console.error('Image upload error:', uploadError);
         return errorResponse(res, "Failed to upload image: " + uploadError.message, 500);
       }
     }
@@ -339,7 +317,7 @@ export const deleteNews = async (req, res) => {
     if (news.imagePublicId) {
       try {
         console.log('Deleting image from Cloudinary:', news.imagePublicId);
-        await deleteFromCloudinary(news.imagePublicId);
+        await deleteCloudinaryImage(news.imagePublicId);
         console.log('Image deleted successfully from Cloudinary');
       } catch (deleteError) {
         console.error('Image delete error:', deleteError);
@@ -408,5 +386,48 @@ export const getFeaturedNews = async (req, res) => {
   } catch (error) {
     console.error("Get featured news error:", error);
     errorResponse(res, "Failed to fetch featured news", 500, error);
+  }
+}; 
+
+// @desc    Like or unlike a news article
+// @route   POST /api/news/:id/like
+// @access  Private
+export const likeNews = async (req, res) => {
+  try {
+    const newsId = req.params.id;
+    const userId = req.user.id;
+    const news = await News.findById(newsId);
+    if (!news) return errorResponse(res, "News not found", 404);
+    const alreadyLiked = news.likes.some(like => like.user.toString() === userId);
+    if (alreadyLiked) {
+      news.likes = news.likes.filter(like => like.user.toString() !== userId);
+    } else {
+      news.likes.push({ user: userId });
+    }
+    await news.save();
+    successResponse(res, news, alreadyLiked ? "Unliked" : "Liked");
+  } catch (error) {
+    console.error("Like news error:", error);
+    errorResponse(res, "Failed to like/unlike news article", 500, error);
+  }
+};
+
+// @desc    Add a comment to a news article
+// @route   POST /api/news/:id/comment
+// @access  Private
+export const commentNews = async (req, res) => {
+  try {
+    const newsId = req.params.id;
+    const userId = req.user.id;
+    const { text } = req.body;
+    if (!text) return errorResponse(res, "Comment text is required", 400);
+    const news = await News.findById(newsId);
+    if (!news) return errorResponse(res, "News not found", 404);
+    news.comments.push({ user: userId, text, createdAt: new Date() });
+    await news.save();
+    successResponse(res, news, "Comment added");
+  } catch (error) {
+    console.error("Comment news error:", error);
+    errorResponse(res, "Failed to add comment", 500, error);
   }
 }; 

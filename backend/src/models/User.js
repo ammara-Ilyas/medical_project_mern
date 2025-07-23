@@ -24,7 +24,6 @@ const userSchema = new mongoose.Schema({
   phone: {
     type: String,
     required: [true, "Phone number is required"],
-    match: [/^[\+]?[1-9][\d]{0,15}$/, "Please enter a valid phone number"]
   },
   role: {
     type: String,
@@ -32,8 +31,8 @@ const userSchema = new mongoose.Schema({
     default: "patient"
   },
   avatar: {
-    type: String,
-    default: "https://res.cloudinary.com/demo/image/upload/v1312461204/sample.jpg"
+      type: String,
+      default: "https://res.cloudinary.com/demo/image/upload/v1312461204/sample.jpg"
   },
   avatarPublicId: {
     type: String

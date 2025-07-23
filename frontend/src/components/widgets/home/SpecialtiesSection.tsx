@@ -26,7 +26,6 @@ export default function SpecialtiesSection() {
         <div className="bg-white rounded-lg overflow-hidden shadow-sm">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-0 border border-gray-200">
             {specialties.map((name, idx) => {
-              const isActive = name === "Bones";
               return (
                 <div
                   key={name}
@@ -37,7 +36,7 @@ export default function SpecialtiesSection() {
                     borderBottom: idx >= 8 ? "none" : undefined,
                   }}
                 >
-                  <FaRegHeart className={`text-3xl mb-2 transition-colors duration-200 
+                  <FaRegHeart className={`text-3xl mb-2  transition-colors duration-200 
                  
                   `} />
                   <span className={`font-semibold text-sm md:text-base transition-colors duration-200 `}>{name}</span>

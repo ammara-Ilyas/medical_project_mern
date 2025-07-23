@@ -19,7 +19,7 @@ export default function ServicesSection() {
             {services.map((s, i) => (
               <button
                 key={s.name}
-                className={`flex flex-col items-center gap-2 px-4 py-4 hover:bg-[#1F2B6C] hover:text-white border-b last:border-b-0 text-base font-semibold transition $
+                className={`flex flex-col items-center  gap-2 px-4 py-4 hover:bg-[#1F2B6C] hover:text-white border-b last:border-b-0 text-base font-semibold transition $
                 `}
                 style={{
                   borderColor: "#E5EAF2",
@@ -31,8 +31,8 @@ export default function ServicesSection() {
                       : "0",
                 }}
               >
-                <span className="text-2xl mb-1">{s.icon}</span>
-                <span>{s.name}</span>
+                <span className="text-2xl animate-bounce group-hover:animate-none mb-1">{s.icon}</span>
+                <span className="">{s.name}</span>
               </button>
             ))}
             <button className="mt-2 mx-4 mb-4 px-4 py-2 bg-[#1F2B6C] text-white rounded-md font-semibold">
@@ -71,7 +71,7 @@ export default function ServicesSection() {
             className="rounded-md object-cover w-full"
           />
           <Image
-            src="/images/home/services_02.png"
+            src="/images/home/service_02.png"
             alt="Service 2"
             width={240}
             height={120}

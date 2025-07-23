@@ -3,6 +3,7 @@ import AdminSidebar from '@/components/widgets/admin/AdminSidebar';
 import AdminHeader from '@/components/widgets/admin/AdminHeader';
 import RouteProgressBar from '@/components/widgets/admin/RouteProgressBar';
 import PageTransition from '@/components/widgets/admin/PageTransition';
+import { ToastProvider } from '@/context/ToastContext';
 
 export default function AdminLayout({
   children,
@@ -10,17 +11,19 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <RouteProgressBar />
-      <AdminHeader />
-      <div className="flex">
-        <AdminSidebar />
-        <main className="flex-1 p-6">
-          <PageTransition>
-            {children}
-          </PageTransition>
-        </main>
+    <ToastProvider>
+      <div className="min-h-screen relative bg-gray-50">
+        <RouteProgressBar />
+        <AdminHeader />
+        <div>
+          <AdminSidebar />
+          <main className="flex-1 ml-6 p-6 pl-64">
+            <PageTransition>
+              {children}
+            </PageTransition>
+          </main>
+        </div>
       </div>
-    </div>
+    </ToastProvider>
   );
 } 

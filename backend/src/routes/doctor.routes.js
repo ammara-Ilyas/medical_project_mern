@@ -8,8 +8,7 @@ import {
   updateDoctor, 
   deleteDoctor 
 } from "../controllers/doctor.controller.js";
-import { upload } from "../middleware/multer.middleware.js";
-
+import upload from "../middleware/multer.middleware.js";
 const router = express.Router();
 
 // Public routes
@@ -27,16 +26,22 @@ router.get("/:id", asyncHandler(getDoctorById));
 // @desc    Create doctor (Admin only)
 // @route   POST /api/doctors
 // @access  Admin
-router.post("/", protect, admin, upload.single("avatar"), asyncHandler(createDoctor));
+router.post("/",  upload.single("avatar"), asyncHandler(createDoctor));
 
 // @desc    Update doctor (Admin only)
 // @route   PUT /api/doctors/:id
 // @access  Admin
-router.put("/:id", protect, admin, upload.single("avatar"), asyncHandler(updateDoctor));
+router.put("/:id",  upload.single("avatar"), asyncHandler(updateDoctor));
 
 // @desc    Delete doctor (Admin only)
 // @route   DELETE /api/doctors/:id
 // @access  Admin
-router.delete("/:id", protect, admin, asyncHandler(deleteDoctor));
+router.delete("/:id",  asyncHandler(deleteDoctor));
+
+// Doctor image upload
+router.post("/upload", upload.single("image"), (req, res) => {
+  if (!req.file) return res.status(400).json({ error: "No file uploaded" });
+  res.json({ url: req.file.path, public_id: req.file.filename });
+});
 
 export default router; 

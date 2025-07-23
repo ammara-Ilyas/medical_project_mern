@@ -15,18 +15,11 @@ const responsive = {
   mobile: { breakpoint: { max: 600, min: 0 }, items: 1 },
 };
 
-type Doctor = {
-  name: string;
-  specialty: string;
-  image: string;
-  linkedin: string;
-  facebook: string;
-  twitter: string;
-};
-
 export default function DoctorsCarouselSection() {
-  const { doctors } = useDoctorContext();
-  console.log("doctors",doctors);
+  const { doctors, loading, error } = useDoctorContext();
+
+  if (loading) return <div className="text-center py-8">Loading doctors...</div>;
+  if (error) return <div className="text-center text-red-500 py-8">{error}</div>;
 
   return (
     <section className="w-full  py-12 bg-white">

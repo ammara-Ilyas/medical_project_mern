@@ -1,50 +1,527 @@
 [
   {
-    "name": "Dr. John Smith",
-    "specialty": "Neurology",
-    "image": "/images/home/doctor_01.png",
-    "linkedin": "#",
-    "facebook": "#",
-    "twitter": "#"
+    "user": "60d0fe4f5b67d5001c000001",
+    "specialization": "Cardiology",
+    "licenseNumber": "LIC-CAR-001",
+    "experience": 15,
+    "education": [
+      {
+        "degree": "MD",
+        "institution": "University of Health Sciences",
+        "year": 2005
+      },
+      {
+        "degree": "Fellowship in Cardiology",
+        "institution": "National Heart Institute",
+        "year": 2010
+      }
+    ],
+    "certifications": [
+      {
+        "name": "Board Certified Cardiologist",
+        "issuingOrganization": "American Board of Internal Medicine",
+        "issueDate": "2010-06-01T00:00:00.000Z",
+        "expiryDate": "2025-06-01T00:00:00.000Z"
+      }
+    ],
+    "bio": "Dr. Smith is a highly experienced cardiologist with a passion for patient care and preventive medicine. He specializes in interventional cardiology and cardiac rhythm disorders.",
+    "languages": ["English", "Spanish"],
+    "consultationFee": 150,
+    "availability": [
+      {
+        "day": "monday",
+        "startTime": "09:00",
+        "endTime": "17:00",
+        "isAvailable": true
+      },
+      {
+        "day": "wednesday",
+        "startTime": "10:00",
+        "endTime": "18:00",
+        "isAvailable": true
+      }
+    ],
+    "rating": {
+      "average": 4.8,
+      "count": 250
+    },
+    "isVerified": true,
+    "isActive": true,
+    "services": ["60d0fe4f5b67d5001c00000a", "60d0fe4f5b67d5001c00000b"],
+    "createdAt": "2023-01-15T10:00:00.000Z",
+    "updatedAt": "2023-01-15T10:00:00.000Z"
   },
   {
-    "name": "Dr. Jane Doe",
-    "specialty": "Cardiology",
-    "image": "/images/home/doctor_02.png",
-    "linkedin": "#",
-    "facebook": "#",
-    "twitter": "#"
+    "user": "60d0fe4f5b67d5001c000002",
+    "specialization": "Pediatrics",
+    "licenseNumber": "LIC-PED-002",
+    "experience": 8,
+    "education": [
+      {
+        "degree": "MD",
+        "institution": "State Medical University",
+        "year": 2012
+      },
+      {
+        "degree": "Residency in Pediatrics",
+        "institution": "Children's Hospital",
+        "year": 2015
+      }
+    ],
+    "certifications": [
+      {
+        "name": "Board Certified Pediatrician",
+        "issuingOrganization": "American Board of Pediatrics",
+        "issueDate": "2015-09-01T00:00:00.000Z",
+        "expiryDate": "2025-09-01T00:00:00.000Z"
+      }
+    ],
+    "bio": "Dr. Johnson is a compassionate pediatrician dedicated to the health and well-being of children from infancy through adolescence. She focuses on preventative care and childhood immunizations.",
+    "languages": ["English"],
+    "consultationFee": 100,
+    "availability": [
+      {
+        "day": "tuesday",
+        "startTime": "08:30",
+        "endTime": "16:30",
+        "isAvailable": true
+      },
+      {
+        "day": "thursday",
+        "startTime": "09:00",
+        "endTime": "17:00",
+        "isAvailable": true
+      }
+    ],
+    "rating": {
+      "average": 4.9,
+      "count": 180
+    },
+    "isVerified": true,
+    "isActive": true,
+    "services": ["60d0fe4f5b67d5001c00000c", "60d0fe4f5b67d5001c00000d"],
+    "createdAt": "2023-02-20T11:00:00.000Z",
+    "updatedAt": "2023-02-20T11:00:00.000Z"
   },
   {
-    "name": "Dr. Alex Brown",
-    "specialty": "Emergency Care",
-    "image": "/images/home/doctor_03.png",
-    "linkedin": "#",
-    "facebook": "#",
-    "twitter": "#"
+    "user": "60d0fe4f5b67d5001c000003",
+    "specialization": "Dermatology",
+    "licenseNumber": "LIC-DER-003",
+    "experience": 10,
+    "education": [
+      {
+        "degree": "MD",
+        "institution": "City University Medical School",
+        "year": 2010
+      },
+      {
+        "degree": "Residency in Dermatology",
+        "institution": "Dermatology Institute",
+        "year": 2013
+      }
+    ],
+    "certifications": [
+      {
+        "name": "Board Certified Dermatologist",
+        "issuingOrganization": "American Academy of Dermatology",
+        "issueDate": "2013-03-01T00:00:00.000Z",
+        "expiryDate": "2028-03-01T00:00:00.000Z"
+      }
+    ],
+    "bio": "Dr. Brown offers comprehensive dermatological care, from common skin conditions to cosmetic procedures. She is committed to helping patients achieve healthy and radiant skin.",
+    "languages": ["English", "French"],
+    "consultationFee": 120,
+    "availability": [
+      {
+        "day": "monday",
+        "startTime": "10:00",
+        "endTime": "18:00",
+        "isAvailable": true
+      },
+      {
+        "day": "friday",
+        "startTime": "09:00",
+        "endTime": "17:00",
+        "isAvailable": true
+      }
+    ],
+    "rating": {
+      "average": 4.7,
+      "count": 210
+    },
+    "isVerified": true,
+    "isActive": true,
+    "services": ["60d0fe4f5b67d5001c00000e", "60d0fe4f5b67d5001c00000f"],
+    "createdAt": "2023-03-10T09:30:00.000Z",
+    "updatedAt": "2023-03-10T09:30:00.000Z"
   },
   {
-    "name": "Dr. Sarah Lee",
-    "specialty": "Pediatrics",
-    "image": "/images/home/doctor_01.png",
-    "linkedin": "#",
-    "facebook": "#",
-    "twitter": "#"
+    "user": "60d0fe4f5b67d5001c000004",
+    "specialization": "Orthopedics",
+    "licenseNumber": "LIC-ORT-004",
+    "experience": 20,
+    "education": [
+      {
+        "degree": "MD",
+        "institution": "National Medical College",
+        "year": 2000
+      },
+      {
+        "degree": "Fellowship in Orthopedic Surgery",
+        "institution": "Advanced Orthopedic Center",
+        "year": 2006
+      }
+    ],
+    "certifications": [
+      {
+        "name": "Board Certified Orthopedic Surgeon",
+        "issuingOrganization": "American Board of Orthopaedic Surgery",
+        "issueDate": "2006-11-01T00:00:00.000Z",
+        "expiryDate": "2026-11-01T00:00:00.000Z"
+      }
+    ],
+    "bio": "Dr. Davis is a leading orthopedic surgeon with extensive experience in joint replacement and sports injuries. He is committed to restoring mobility and improving quality of life for his patients.",
+    "languages": ["English"],
+    "consultationFee": 180,
+    "availability": [
+      {
+        "day": "tuesday",
+        "startTime": "09:00",
+        "endTime": "17:00",
+        "isAvailable": true
+      },
+      {
+        "day": "thursday",
+        "startTime": "09:00",
+        "endTime": "17:00",
+        "isAvailable": true
+      }
+    ],
+    "rating": {
+      "average": 4.9,
+      "count": 300
+    },
+    "isVerified": true,
+    "isActive": true,
+    "services": ["60d0fe4f5b67d5001c000010", "60d0fe4f5b67d5001c000011"],
+    "createdAt": "2023-04-05T14:00:00.000Z",
+    "updatedAt": "2023-04-05T14:00:00.000Z"
   },
   {
-    "name": "Dr. Michael Green",
-    "specialty": "Orthopedics",
-    "image": "/images/home/doctor_02.png",
-    "linkedin": "#",
-    "facebook": "#",
-    "twitter": "#"
+    "user": "60d0fe4f5b67d5001c000005",
+    "specialization": "Neurology",
+    "licenseNumber": "LIC-NEU-005",
+    "experience": 12,
+    "education": [
+      {
+        "degree": "MD",
+        "institution": "Global Medical School",
+        "year": 2008
+      },
+      {
+        "degree": "Residency in Neurology",
+        "institution": "Neuroscience Institute",
+        "year": 2011
+      }
+    ],
+    "certifications": [
+      {
+        "name": "Board Certified Neurologist",
+        "issuingOrganization": "American Board of Psychiatry and Neurology",
+        "issueDate": "2011-07-01T00:00:00.000Z",
+        "expiryDate": "2026-07-01T00:00:00.000Z"
+      }
+    ],
+    "bio": "Dr. Miller is a dedicated neurologist specializing in the diagnosis and treatment of complex neurological disorders, including epilepsy and multiple sclerosis.",
+    "languages": ["English", "German"],
+    "consultationFee": 160,
+    "availability": [
+      {
+        "day": "wednesday",
+        "startTime": "10:00",
+        "endTime": "18:00",
+        "isAvailable": true
+      },
+      {
+        "day": "friday",
+        "startTime": "09:00",
+        "endTime": "17:00",
+        "isAvailable": true
+      }
+    ],
+    "rating": {
+      "average": 4.8,
+      "count": 195
+    },
+    "isVerified": true,
+    "isActive": true,
+    "services": ["60d0fe4f5b67d5001c000012", "60d0fe4f5b67d5001c000013"],
+    "createdAt": "2023-05-12T10:30:00.000Z",
+    "updatedAt": "2023-05-12T10:30:00.000Z"
   },
   {
-    "name": "Dr. Emily White",
-    "specialty": "Dermatology",
-    "image": "/images/home/doctor_03.png",
-    "linkedin": "#",
-    "facebook": "#",
-    "twitter": "#"
+    "user": "60d0fe4f5b67d5001c000006",
+    "specialization": "Ophthalmology",
+    "licenseNumber": "LIC-OPH-006",
+    "experience": 9,
+    "education": [
+      {
+        "degree": "MD",
+        "institution": "University Hospital Medical School",
+        "year": 2011
+      },
+      {
+        "degree": "Residency in Ophthalmology",
+        "institution": "Eye Care Center",
+        "year": 2014
+      }
+    ],
+    "certifications": [
+      {
+        "name": "Board Certified Ophthalmologist",
+        "issuingOrganization": "American Board of Ophthalmology",
+        "issueDate": "2014-04-01T00:00:00.000Z",
+        "expiryDate": "2029-04-01T00:00:00.000Z"
+      }
+    ],
+    "bio": "Dr. Wilson is an expert in eye health, providing comprehensive vision care, cataract surgery, and treatment for glaucoma. She is committed to preserving and improving her patients' eyesight.",
+    "languages": ["English", "Mandarin"],
+    "consultationFee": 130,
+    "availability": [
+      {
+        "day": "monday",
+        "startTime": "09:00",
+        "endTime": "17:00",
+        "isAvailable": true
+      },
+      {
+        "day": "wednesday",
+        "startTime": "09:00",
+        "endTime": "17:00",
+        "isAvailable": true
+      }
+    ],
+    "rating": {
+      "average": 4.7,
+      "count": 160
+    },
+    "isVerified": true,
+    "isActive": true,
+    "services": ["60d0fe4f5b67d5001c000014", "60d0fe4f5b67d5001c000015"],
+    "createdAt": "2023-06-01T12:00:00.000Z",
+    "updatedAt": "2023-06-01T12:00:00.000Z"
+  },
+  {
+    "user": "60d0fe4f5b67d5001c000007",
+    "specialization": "Gastroenterology",
+    "licenseNumber": "LIC-GAS-007",
+    "experience": 14,
+    "education": [
+      {
+        "degree": "MD",
+        "institution": "Central Medical College",
+        "year": 2006
+      },
+      {
+        "degree": "Fellowship in Gastroenterology",
+        "institution": "Digestive Health Center",
+        "year": 2010
+      }
+    ],
+    "certifications": [
+      {
+        "name": "Board Certified Gastroenterologist",
+        "issuingOrganization": "American Board of Internal Medicine (Gastroenterology)",
+        "issueDate": "2010-08-01T00:00:00.000Z",
+        "expiryDate": "2025-08-01T00:00:00.000Z"
+      }
+    ],
+    "bio": "Dr. Garcia specializes in digestive health, offering expert care for conditions such as IBS, Crohn's disease, and liver disorders. He is dedicated to improving patients' quality of life.",
+    "languages": ["English", "Spanish"],
+    "consultationFee": 170,
+    "availability": [
+      {
+        "day": "tuesday",
+        "startTime": "10:00",
+        "endTime": "18:00",
+        "isAvailable": true
+      },
+      {
+        "day": "thursday",
+        "startTime": "10:00",
+        "endTime": "18:00",
+        "isAvailable": true
+      }
+    ],
+    "rating": {
+      "average": 4.8,
+      "count": 230
+    },
+    "isVerified": true,
+    "isActive": true,
+    "services": ["60d0fe4f5b67d5001c000016", "60d0fe4f5b67d5001c000017"],
+    "createdAt": "2023-07-08T09:00:00.000Z",
+    "updatedAt": "2023-07-08T09:00:00.000Z"
+  },
+  {
+    "user": "60d0fe4f5b67d5001c000008",
+    "specialization": "Endocrinology",
+    "licenseNumber": "LIC-END-008",
+    "experience": 11,
+    "education": [
+      {
+        "degree": "MD",
+        "institution": "University of Science and Medicine",
+        "year": 2009
+      },
+      {
+        "degree": "Residency in Internal Medicine",
+        "institution": "City Hospital",
+        "year": 2012
+      },
+      {
+        "degree": "Fellowship in Endocrinology",
+        "institution": "Endocrine Research Center",
+        "year": 2014
+      }
+    ],
+    "certifications": [
+      {
+        "name": "Board Certified Endocrinologist",
+        "issuingOrganization": "American Board of Internal Medicine (Endocrinology, Diabetes & Metabolism)",
+        "issueDate": "2014-06-01T00:00:00.000Z",
+        "expiryDate": "2029-06-01T00:00:00.000Z"
+      }
+    ],
+    "bio": "Dr. Lee specializes in hormonal disorders, including diabetes, thyroid conditions, and osteoporosis. She provides personalized treatment plans to help patients manage their endocrine health.",
+    "languages": ["English", "Korean"],
+    "consultationFee": 140,
+    "availability": [
+      {
+        "day": "monday",
+        "startTime": "08:00",
+        "endTime": "16:00",
+        "isAvailable": true
+      },
+      {
+        "day": "friday",
+        "startTime": "08:00",
+        "endTime": "16:00",
+        "isAvailable": true
+      }
+    ],
+    "rating": {
+      "average": 4.6,
+      "count": 175
+    },
+    "isVerified": true,
+    "isActive": true,
+    "services": ["60d0fe4f5b67d5001c000018", "60d0fe4f5b67d5001c000019"],
+    "createdAt": "2023-08-15T11:30:00.000Z",
+    "updatedAt": "2023-08-15T11:30:00.000Z"
+  },
+  {
+    "user": "60d0fe4f5b67d5001c000009",
+    "specialization": "Psychiatry",
+    "licenseNumber": "LIC-PSY-009",
+    "experience": 18,
+    "education": [
+      {
+        "degree": "MD",
+        "institution": "Metropolitan University Medical School",
+        "year": 2002
+      },
+      {
+        "degree": "Residency in Psychiatry",
+        "institution": "Mental Health Institute",
+        "year": 2006
+      }
+    ],
+    "certifications": [
+      {
+        "name": "Board Certified Psychiatrist",
+        "issuingOrganization": "American Board of Psychiatry and Neurology",
+        "issueDate": "2006-09-01T00:00:00.000Z",
+        "expiryDate": "2026-09-01T00:00:00.000Z"
+      }
+    ],
+    "bio": "Dr. Chen provides comprehensive psychiatric evaluations and treatment for a wide range of mental health conditions, including depression, anxiety, and bipolar disorder. He emphasizes a holistic approach to well-being.",
+    "languages": ["English", "Cantonese"],
+    "consultationFee": 200,
+    "availability": [
+      {
+        "day": "tuesday",
+        "startTime": "09:00",
+        "endTime": "17:00",
+        "isAvailable": true
+      },
+      {
+        "day": "wednesday",
+        "startTime": "09:00",
+        "endTime": "17:00",
+        "isAvailable": true
+      }
+    ],
+    "rating": {
+      "average": 4.9,
+      "count": 280
+    },
+    "isVerified": true,
+    "isActive": true,
+    "services": ["60d0fe4f5b67d5001c00001a", "60d0fe4f5b67d5001c00001b"],
+    "createdAt": "2023-09-01T13:00:00.000Z",
+    "updatedAt": "2023-09-01T13:00:00.000Z"
+  },
+  {
+    "user": "60d0fe4f5b67d5001c000010",
+    "specialization": "Urology",
+    "licenseNumber": "LIC-URO-010",
+    "experience": 7,
+    "education": [
+      {
+        "degree": "MD",
+        "institution": "East Coast Medical University",
+        "year": 2013
+      },
+      {
+        "degree": "Residency in Urology",
+        "institution": "Urological Institute",
+        "year": 2016
+      }
+    ],
+    "certifications": [
+      {
+        "name": "Board Certified Urologist",
+        "issuingOrganization": "American Board of Urology",
+        "issueDate": "2016-10-01T00:00:00.000Z",
+        "expiryDate": "2031-10-01T00:00:00.000Z"
+      }
+    ],
+    "bio": "Dr. White provides comprehensive urological care for both men and women, addressing conditions such as kidney stones, urinary tract infections, and prostate health. He is committed to patient comfort and effective treatment.",
+    "languages": ["English"],
+    "consultationFee": 135,
+    "availability": [
+      {
+        "day": "thursday",
+        "startTime": "09:30",
+        "endTime": "17:30",
+        "isAvailable": true
+      },
+      {
+        "day": "saturday",
+        "startTime": "09:00",
+        "endTime": "13:00",
+        "isAvailable": true
+      }
+    ],
+    "rating": {
+      "average": 4.5,
+      "count": 140
+    },
+    "isVerified": true,
+    "isActive": true,
+    "services": ["60d0fe4f5b67d5001c00001c", "60d0fe4f5b67d5001c00001d"],
+    "createdAt": "2023-10-10T10:00:00.000Z",
+    "updatedAt": "2023-10-10T10:00:00.000Z"
   }
-] 
+]

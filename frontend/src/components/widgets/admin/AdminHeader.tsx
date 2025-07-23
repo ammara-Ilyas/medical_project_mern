@@ -10,20 +10,20 @@ export default function AdminHeader() {
   const [showDropdown, setShowDropdown] = useState(false);
 
   return (
-    <header className="bg-white shadow-sm border-b border-gray-200">
-      <div className="flex items-center justify-between px-6 py-4">
+    <header className="bg-[#1F2B6C] border-2 shadow-sm border-b border-blue-700 fixed top-0 left-0 w-full h-16 z-40 lg:pl-64 flex items-center">
+      <div className="flex items-center justify-between px-6 w-full ">
         <div className="flex items-center space-x-4">
-          <Link href="/" className="flex items-center text-xl font-bold text-blue-900 tracking-wide">
-            <span className="text-blue-900">MEDD</span><span className="text-blue-500">ICAL</span>
-            <span className="ml-2 text-base font-semibold text-gray-900">Center</span>
+          <Link href="/admin" className="flex items-center text-xl font-bold text-white tracking-wide">
+            <span className="text-white">MEDD</span><span className="text-[#159EEC]">ICAL</span>
+            <span className="ml-2 text-base font-semibold text-white">Admin</span>
           </Link>
-          <span className="text-gray-400">|</span>
-          <span className="text-sm text-gray-600">Admin Panel</span>
+          <span className="text-blue-300">|</span>
+          <span className="text-sm text-blue-100">Admin Panel</span>
         </div>
         <div className="flex items-center space-x-4">
           <div className="relative">
             <button
-              className="p-2 text-gray-400 hover:text-gray-600 relative focus:outline-none"
+              className="p-2 text-blue-100 hover:text-white relative focus:outline-none"
               onClick={() => setShowDropdown((prev) => !prev)}
             >
               <BellIcon className="h-6 w-6" />
@@ -36,10 +36,10 @@ export default function AdminHeader() {
             )}
           </div>
           <div className="flex items-center space-x-2">
-            <UserCircleIcon className="h-8 w-8 text-gray-400" />
+            <UserCircleIcon className="h-8 w-8 text-blue-100" />
             <div className="text-sm">
-              <p className="font-medium text-gray-900">{user?.name || 'Admin User'}</p>
-              <p className="text-gray-500">{user?.email || 'admin@medical.com'}</p>
+              <p className="font-medium text-white">{user?.name || 'Admin User'}</p>
+              <p className="text-blue-100">{user?.email || 'admin@medical.com'}</p>
             </div>
           </div>
         </div>

@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useUser } from '@/context/UserContext';
+import { useNewsContext } from '@/context/NewsContext';
 
 interface NewsFormData {
   title: string;
@@ -23,12 +24,16 @@ interface Category {
   name: string;
 }
 
-const API_URL = `${process.env.NEXT_PUBLIC_API_URL ? process.env.NEXT_PUBLIC_API_URL : "http://localhost:5000"}/api/news`;
+interface AddNewsFormProps {
+  onClose: () => void;
+}
+
 const CATEGORIES_URL = `${process.env.NEXT_PUBLIC_API_URL ? process.env.NEXT_PUBLIC_API_URL : "http://localhost:5000"}/api/categories`;
 
-export default function AddNewsForm() {
+export default function AddNewsForm({ onClose }: AddNewsFormProps) {
   const router = useRouter();
   const { token } = useUser();
+  const { createNews, loading } = useNewsContext();
   const [isLoading, setIsLoading] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
   const [formData, setFormData] = useState<NewsFormData>({
@@ -44,6 +49,7 @@ export default function AddNewsForm() {
     seoDescription: '',
     seoKeywords: []
   });
+  const [error, setError] = useState<string | null>(null);
 
   // Fetch categories on component mount
   useEffect(() => {
@@ -115,11 +121,9 @@ export default function AddNewsForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-
+    setError(null);
     try {
       const formDataToSend = new FormData();
-      
-      // Add text fields
       formDataToSend.append('title', formData.title);
       formDataToSend.append('content', formData.content);
       formDataToSend.append('summary', formData.summary);
@@ -128,37 +132,17 @@ export default function AddNewsForm() {
       formDataToSend.append('isFeatured', formData.isFeatured.toString());
       formDataToSend.append('seoTitle', formData.seoTitle);
       formDataToSend.append('seoDescription', formData.seoDescription);
-      
-      // Add arrays
       formDataToSend.append('tags', JSON.stringify(formData.tags));
       formDataToSend.append('seoKeywords', JSON.stringify(formData.seoKeywords));
-      
-      // Add image file if selected
       if (formData.image) {
         formDataToSend.append('image', formData.image);
       }
-
-      const headers: Record<string, string> = {};
-      if (token) {
-        headers["Authorization"] = `Bearer ${token}`;
-      }
-
-      const response = await fetch(API_URL, {
-        method: 'POST',
-        headers,
-        body: formDataToSend,
-      });
-
-      if (response.ok) {
-        router.push('/admin/news');
-        router.refresh();
-      } else {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to add news');
-      }
+   const res=   await createNews(formDataToSend);
+   console.log("res",res);
+   
+      onClose();
     } catch (error: any) {
-      console.error('Error adding news:', error);
-      alert(error.message || 'Failed to add news. Please try again.');
+      setError(error.message || 'Failed to add news. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -339,19 +323,20 @@ export default function AddNewsForm() {
         <div className="flex justify-end space-x-4">
           <button
             type="button"
-            onClick={() => router.back()}
+            onClick={onClose}
             className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
           >
             Cancel
           </button>
           <button
             type="submit"
-            disabled={isLoading}
+            disabled={isLoading || loading}
             className="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 disabled:opacity-50"
           >
-            {isLoading ? 'Adding...' : 'Add Article'}
+            {isLoading || loading ? 'Adding...' : 'Add Article'}
           </button>
         </div>
+        {error && <div className="text-red-600 mb-2">{error}</div>}
       </form>
     </div>
   );

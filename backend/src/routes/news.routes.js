@@ -8,29 +8,15 @@ import {
   updateNews, 
   deleteNews,
   getNewsByCategory,
-  getFeaturedNews
+  getFeaturedNews,
+  likeNews,
+  commentNews
 } from "../controllers/news.controller.js";
-import { upload } from "../middleware/multer.middleware.js";
+import upload  from "../middleware/multer.middleware.js";
 
 const router = express.Router();
 
-// Test route for Cloudinary configuration
-// @desc    Test Cloudinary configuration
-// @route   GET /api/news/test-cloudinary
-// @access  Public
-router.get("/test-cloudinary", (req, res) => {
-  const cloudinaryConfig = {
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME ? 'Configured' : 'Not configured',
-    api_key: process.env.CLOUDINARY_API_KEY ? 'Configured' : 'Not configured',
-    api_secret: process.env.CLOUDINARY_API_SECRET ? 'Configured' : 'Not configured'
-  };
-  
-  res.json({
-    message: "Cloudinary configuration test",
-    config: cloudinaryConfig,
-    status: Object.values(cloudinaryConfig).every(val => val === 'Configured') ? 'Ready' : 'Not ready'
-  });
-});
+
 
 // Public routes
 // @desc    Get all news
@@ -47,16 +33,21 @@ router.get("/:id", asyncHandler(getNewsById));
 // @desc    Create news (Admin only)
 // @route   POST /api/news
 // @access  Admin
-router.post("/", protect, admin, upload.single("image"), asyncHandler(createNews));
+router.post("/",  upload.single("image"), asyncHandler(createNews));
 
 // @desc    Update news (Admin only)
 // @route   PUT /api/news/:id
 // @access  Admin
-router.put("/:id", protect, admin, upload.single("image"), asyncHandler(updateNews));
+router.put("/:id",  upload.single("image"), asyncHandler(updateNews));
 
 // @desc    Delete news (Admin only)
 // @route   DELETE /api/news/:id
 // @access  Admin
-router.delete("/:id", protect, admin, asyncHandler(deleteNews));
+router.delete("/:id",  asyncHandler(deleteNews));
+
+// Like/unlike a news article
+router.post("/:id/like", protect, asyncHandler(likeNews));
+// Add a comment to a news article
+router.post("/:id/comment", protect, asyncHandler(commentNews));
 
 export default router; 

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -8,21 +8,21 @@ import Topbar from "@/components/layout/Topbar";
 import { DoctorProvider } from "@/context/DoctorContext";
 import { NewsProvider } from "@/context/NewsContext";
 import { UserProvider } from "@/context/UserContext";
+import { usePathname } from 'next/navigation';
+import AppShell from './AppShell';
+import { AppointmentProvider } from "@/context/AppointmentContext";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
   title: "MEDDICAL - Hospital Website",
   description: "Qualified healthcare, expert doctors, and modern medical services.",
 };
+
 
 export default function RootLayout({
   children,
@@ -31,15 +31,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`${inter.variable} antialiased`}>
         <UserProvider>
           <DoctorProvider>
             <NewsProvider>
               <AppProvider>
-                <Topbar />
-                <Navbar />
-                <main>{children}</main>
-                <Footer />
+                <AppointmentProvider>
+                  <AppShell>{children}</AppShell>
+                </AppointmentProvider>
               </AppProvider>
             </NewsProvider>
           </DoctorProvider>

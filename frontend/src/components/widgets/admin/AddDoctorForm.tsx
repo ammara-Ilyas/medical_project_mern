@@ -1,8 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useUser } from '@/context/UserContext';
+import { useDoctorContext } from '@/context/DoctorContext';
+import { useToast } from '@/context/ToastContext';
+import { servicesAPI } from '@/services/api';
+import Select from 'react-select';
 
 interface DoctorFormData {
   name: string;
@@ -25,9 +29,12 @@ interface DoctorFormData {
 
 const API_URL = `${process.env.NEXT_PUBLIC_API_URL ? process.env.NEXT_PUBLIC_API_URL : "http://localhost:5000"}/api/doctors`;
 
+
 export default function AddDoctorForm() {
   const router = useRouter();
   const { token } = useUser();
+  const { createDoctor } = useDoctorContext();
+  const { showToast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState<DoctorFormData>({
     name: '',
@@ -43,6 +50,20 @@ export default function AddDoctorForm() {
     avatar: null,
     education: [{ degree: '', institution: '', year: new Date().getFullYear() }]
   });
+  const [services, setServices] = useState<any[]>([]);
+  const [selectedServices, setSelectedServices] = useState<string[]>([]);
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const res = await servicesAPI.getAll();
+        setServices(res.data || []);
+      } catch (err) {
+        // Optionally handle error
+      }
+    };
+    fetchServices();
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -80,6 +101,15 @@ export default function AddDoctorForm() {
     }));
   };
 
+  const serviceOptions = services.map((service: any) => ({
+    value: service._id,
+    label: service.title,
+  }));
+
+  const handleServicesChange = (selected: any) => {
+    setSelectedServices(selected ? selected.map((s: any) => s.value) : []);
+  };
+
   const addEducation = () => {
     setFormData(prev => ({
       ...prev,
@@ -108,49 +138,29 @@ export default function AddDoctorForm() {
     setIsLoading(true);
 
     try {
-      const formDataToSend = new FormData();
-      
-      // Add text fields
-      formDataToSend.append('name', formData.name);
-      formDataToSend.append('email', formData.email);
-      formDataToSend.append('phone', formData.phone);
-      formDataToSend.append('password', formData.password);
-      formDataToSend.append('specialization', formData.specialization);
-      formDataToSend.append('licenseNumber', formData.licenseNumber);
-      formDataToSend.append('experience', formData.experience.toString());
-      formDataToSend.append('bio', formData.bio);
-      formDataToSend.append('consultationFee', formData.consultationFee.toString());
-      
-      // Add arrays
-      formDataToSend.append('languages', JSON.stringify(formData.languages));
-      formDataToSend.append('education', JSON.stringify(formData.education));
-      
-      // Add avatar file if selected
+      const form = new FormData();
+      form.append('name', formData.name);
+      form.append('email', formData.email);
+      form.append('phone', formData.phone);
+      form.append('password', formData.password);
+      form.append('specialization', formData.specialization);
+      form.append('licenseNumber', formData.licenseNumber);
+      form.append('experience', formData.experience.toString());
+      form.append('bio', formData.bio);
+      form.append('consultationFee', formData.consultationFee.toString());
+      form.append('languages', JSON.stringify(formData.languages));
+      form.append('education', JSON.stringify(formData.education));
       if (formData.avatar) {
-        formDataToSend.append('avatar', formData.avatar);
+        form.append('avatar', formData.avatar);
       }
-
-      const headers: Record<string, string> = {};
-      if (token) {
-        headers["Authorization"] = `Bearer ${token}`;
+      if (selectedServices.length > 0) {
+        selectedServices.forEach(id => form.append('services', id));
       }
-
-      const response = await fetch(API_URL, {
-        method: 'POST',
-        headers,
-        body: formDataToSend,
-      });
-
-      if (response.ok) {
-        router.push('/admin/doctors');
-        router.refresh();
-      } else {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to add doctor');
-      }
+      await createDoctor(form);
+      showToast('Doctor added successfully!', 'success');
+      router.push('/admin/doctors/doctors-list');
     } catch (error: any) {
-      console.error('Error adding doctor:', error);
-      alert(error.message || 'Failed to add doctor. Please try again.');
+      showToast(error.message || 'Failed to add doctor. Please try again.', 'error');
     } finally {
       setIsLoading(false);
     }
@@ -289,6 +299,21 @@ export default function AddDoctorForm() {
           </div>
         </div>
 
+        {/* Replace the old select with react-select */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Services</label>
+          <Select
+            isMulti
+            options={serviceOptions}
+            value={serviceOptions.filter(opt => selectedServices.includes(opt.value))}
+            onChange={handleServicesChange}
+            className="basic-multi-select"
+            classNamePrefix="select"
+            placeholder="Select services..."
+          />
+          <p className="mt-1 text-sm text-gray-500">You can select multiple services.</p>
+        </div>
+
         {/* Bio */}
         <div>
           <label className="block text-sm font-medium text-gray-700">Bio</label>
@@ -370,7 +395,6 @@ export default function AddDoctorForm() {
         <div className="flex justify-end space-x-4">
           <button
             type="button"
-            onClick={() => router.back()}
             className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
           >
             Cancel
